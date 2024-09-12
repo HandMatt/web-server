@@ -47,4 +47,10 @@ To test the shared resource (responsible for encoding and decoding the data) mov
 cargo test
 ```
 
+To run the server use `cargo run` within the `server` directory. You can do the same for the `collector`.
+
+You will see a steady stream of data being encoded within the collector, and the server will be receiving the data.
+
+If the server is stopped the collector will crash.
+
 > This project demonstrates the learnings from the fifth week of the Ardan Labs: Ultimate Rust Foundations course.
