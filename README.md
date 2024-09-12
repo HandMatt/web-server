@@ -1,15 +1,15 @@
 # Web Server
 
 This project is a client/server setup, representing data-collection for an Internet-of-Things (IoT) setup.
-Using SQLite as the database, and various Rust crates for building web servers and managing data. 
+Using SQLite as the database, and popular Rust crates for building web servers and managing data.
 
 ## Brief
 
 A company is building data-collection widget for customers. These widgets are small, low-power devices that collect data from sensors and send it to a central server. The server stores the data, and provides a web interface for customers to view their data. To achieve this I will need to:
 
-* Build a daemon to the on the data-collectors
-* Build a server to receive and store the data
-* Build a web server to query and display the data
+- Build a daemon to the on the data-collectors
+- Build a server to receive and store the data
+- Build a web server to query and display the data
 
 ### Collection Daemon
 
@@ -51,6 +51,6 @@ To run the server use `cargo run` within the `server` directory. You can do the 
 
 You will see a steady stream of data being encoded within the collector, and the server will be receiving the data.
 
-If the server is stopped the collector will crash.
+If the server is stopped, the collector will queue up data and send it when the sever becomes available.
 
 > This project demonstrates the learnings from the fifth week of the Ardan Labs: Ultimate Rust Foundations course.
