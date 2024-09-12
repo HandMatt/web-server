@@ -1,6 +1,7 @@
 use shared::CollectorCommand;
 mod data_collector;
 mod sender;
+mod errors;
 
 fn main() {
     let (tx, rx) = std::sync::mpsc::channel::<CollectorCommand>();
@@ -12,6 +13,6 @@ fn main() {
 
     // Listen for commands to send
     while let Ok(command) = rx.recv() {
-        sender::send_command(command);
+        let _ = sender::send_command(command);
     }
 }

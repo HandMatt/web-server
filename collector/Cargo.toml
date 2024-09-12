@@ -6,3 +6,4 @@ edition = "2021"
 [dependencies]
 sysinfo = { version = "0.29.2", features = ["apple-app-store"] }
 shared = { path = "../shared" }
+thiserror = "1.0.63"
