@@ -76,4 +76,8 @@ When the server is active you will be able to access a webpage on `http://localh
 - `api/collector/:uuid` - show all datapoints for a given collector (JSON)
 - `api/collector/:uuid/shutdown` - send a shutdown command to a given collector
 
+# Optimisations
+
+Using `cargo bloat` and `cargo tree` has identified that UUID creation and sysinfo have dependencies that take up a considerable amount of space. Removing UUID creation and omitting the `rayon` can save some space. Potential reductions could be obtained by updating the crates being used in the project.   
+
 > This project demonstrates the learnings from the fifth week of the Ardan Labs: Ultimate Rust Foundations course.
