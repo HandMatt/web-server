@@ -28,6 +28,12 @@ pub enum CollectorCommand {
     },
 }
 
+/// Responses from the data collector.
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+pub enum CollectorResponse {
+    Ack,
+}
+
 /// Encode a collector command.
 pub fn encode(command: &CollectorCommand) -> Vec<u8> {
     let payload_bytes = bincode::serialize(command).unwrap();
@@ -76,6 +82,16 @@ pub fn decode(bytes: &[u8]) -> (u32, CollectorCommand) {
     (timestamp, bincode::deserialize(payload).unwrap())
 }
 
+/// Encode a collector response.
+pub fn encode_response(command: CollectorResponse) -> Vec<u8> {
+    bincode::serialize(&command).unwrap()
+}
+
+/// Decode a collector response.
+pub fn decode_response(bytes: &[u8]) -> CollectorResponse {
+    bincode::deserialize(bytes).unwrap()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -93,5 +109,14 @@ mod tests {
         let (timestamp, decoded) = decode(&encoded);
         assert_eq!(decoded, command);
         assert!(timestamp > 0);
+    }
+
+    /// Test that the encoding and decoding of responses works.
+    #[test]
+    fn test_encode_decode_response() {
+        let response = CollectorResponse::Ack;
+        let encoded = encode_response(response.clone());
+        let decoded = decode_response(&encoded);
+        assert_eq!(decoded, response);
     }
 }

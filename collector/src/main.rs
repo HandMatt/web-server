@@ -32,6 +32,9 @@ fn main() {
         let encoded = shared::encode(&command);
         println!("Encoded: {} bytes", encoded.len());
         send_queue.push_back(encoded);
-        let _ = sender::send_queue(&mut send_queue);
+        let result = sender::send_queue(&mut send_queue);
+        if result.is_err() {
+            println!("{result:?}");
+        }
     }
 }
