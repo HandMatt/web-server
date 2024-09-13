@@ -41,6 +41,21 @@ WebClient[Web Client] <---> WebServer
 
 To run this application you will need to have Rust installed (via RustUp).
 
+To create and setup the db you will need to install the SQLx command-line client:
+
+```shell
+cargo install sqlx-cli
+```
+
+Then create and build the database:
+
+```shell
+sqlx database create
+sqlx migrate run
+```
+
+## Run
+
 To test the shared resource (responsible for encoding and decoding the data) move into the `shared` directory and run the following command.
 
 ```shell
@@ -52,5 +67,11 @@ To run the server use `cargo run` within the `server` directory. You can do the 
 You will see a steady stream of data being encoded within the collector, and the server will be receiving the data.
 
 If the server is stopped, the collector will queue up data and send it when the sever becomes available.
+
+When the server is active you will be able to access a webpage on `http://localhost:3000/` which has the following routes:
+
+- `api/all` - show all datapoints
+- `api/collectors` - show all collectors
+- `api/collector/:uuid` - show all datapoints for a given collector
 
 > This project demonstrates the learnings from the fifth week of the Ardan Labs: Ultimate Rust Foundations course.

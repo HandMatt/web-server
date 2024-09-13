@@ -1,4 +1,6 @@
-.*
-!.gitignore
-
+# dev assets
 /target
+
+# data
+uuid
+collection.db
