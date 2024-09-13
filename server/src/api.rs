@@ -1,3 +1,4 @@
+use crate::commands::add_command;
 use axum::{extract::Path, Extension, Json};
 use serde::Serialize;
 use sqlx::FromRow;
@@ -60,4 +61,11 @@ pub async fn collector_data(
     .unwrap();
 
     Json(rows)
+}
+
+/// Shutdown a collector
+pub async fn shutdown_collector(uuid: Path<String>) {
+    let uuid = uuid::Uuid::parse_str(uuid.as_str()).unwrap();
+    let uuid = uuid.as_u128();
+    add_command(uuid, shared::TaskType::Shutdown);
 }

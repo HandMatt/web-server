@@ -1,3 +1,4 @@
+use crate::commands::get_commands;
 use shared::{
     decode, encode_response, CollectorCommand, CollectorResponse, DATA_COLLECTOR_ADDRESS,
 };
@@ -42,6 +43,17 @@ async fn new_connection(mut socket: TcpStream, address: SocketAddr, cnn: Pool<Sq
         println!("Received data: {received_data:?}");
 
         match received_data {
+            (_timestamp, CollectorCommand::RequestWork(collector_id)) => {
+                if let Some(commands) = get_commands(collector_id) {
+                    let work = CollectorResponse::Task(commands);
+                    let bytes = encode_response(work);
+                    socket.write_all(&bytes).await.unwrap();
+                } else {
+                    let no_work = CollectorResponse::NoWork;
+                    let bytes = encode_response(no_work);
+                    socket.write_all(&bytes).await.unwrap();
+                }
+            }
             (
                 timestamp,
                 CollectorCommand::SubmitData {

@@ -26,12 +26,21 @@ pub enum CollectorCommand {
         used_memory: u64,
         average_cpu_usage: f32,
     },
+    RequestWork(u128), // Contains the collector id
 }
 
 /// Responses from the data collector.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum CollectorResponse {
     Ack,
+    NoWork,
+    Task(TaskType),
+}
+
+/// Types of tasks that the data collector can perform
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+pub enum TaskType {
+    Shutdown,
 }
 
 /// Encode a collector command.

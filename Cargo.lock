@@ -1321,6 +1321,7 @@ dependencies = [
  "axum",
  "dotenv",
  "futures",
+ "once_cell",
  "serde",
  "shared",
  "sqlx",

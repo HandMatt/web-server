@@ -6,7 +6,7 @@ pub enum CollectorError {
     #[error("Unable to connect to the server")]
     ServerConnection,
     #[error("Unable to send data to the server")]
-    DataTransmission,
+    DataSend,
     #[error("Unable to receive data")]
-    DataRetrieval,
+    DataReceive,
 }
