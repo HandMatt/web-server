@@ -2,6 +2,7 @@ use axum::{routing::get, Extension, Router};
 use std::net::SocketAddr;
 mod api;
 mod collector;
+mod web;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
@@ -17,7 +18,8 @@ async fn main() -> anyhow::Result<()> {
 
     // Start the web server
     let app = Router::new()
-        .route("/", get(test))
+        .route("/", get(web::index))
+        .route("/collector.html", get(web::collector))
         .route("/api/all", get(api::show_all))
         .route("/api/collectors", get(api::show_collectors))
         .route("/api/collector/:uuid", get(api::collector_data))
@@ -31,9 +33,4 @@ async fn main() -> anyhow::Result<()> {
     // Wait for the data collector to finish
     handle.await??; // Two question marks - we're unwrapping the task result, and the result from running the collector.
     Ok(())
-}
-
-/// A simple route
-async fn test() -> &'static str {
-    "Hello, world!"
 }
