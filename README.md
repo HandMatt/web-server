@@ -70,8 +70,17 @@ If the server is stopped, the collector will queue up data and send it when the 
 
 When the server is active you will be able to access a webpage on `http://localhost:3000/` which has the following routes:
 
-- `api/all` - show all datapoints
-- `api/collectors` - show all collectors
-- `api/collector/:uuid` - show all datapoints for a given collector
+- `/` - display `index.html`
+- `api/all` - show all datapoints (JSON)
+- `api/collectors` - show all collectors (JSON)
+- `api/collector/:uuid` - show all datapoints for a given collector (JSON)
+- `api/collector/:uuid/shutdown` - send a shutdown command to a given collector
+
+## Collector Optimizations
+
+- Add compile options for release mode in the Cargo.toml
+- Remove UUID generation
+
+Currently the collector binary compiles to a size of `803,536 bytes` which is just about small enough to fit on a RPi Pico. Greater optimisations could be made by compiling the binary specifying a target.
 
 > This project demonstrates the learnings from the fifth week of the Ardan Labs: Ultimate Rust Foundations course.

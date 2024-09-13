@@ -11,9 +11,11 @@ fn get_uuid() -> u128 {
         let contents = std::fs::read_to_string(path).unwrap();
         contents.parse::<u128>().unwrap()
     } else {
-        let uuid = uuid::Uuid::new_v4().as_u128();
-        std::fs::write(path, uuid.to_string()).unwrap();
-        uuid
+        //let uuid = uuid::Uuid::new_v4().as_u128();
+        //std::fs::write(path, uuid.to_string()).unwrap();
+        //uuid
+        // provide collector UUID as part of setup in order to reduce bin size
+        1234567890
     }
 }
 
