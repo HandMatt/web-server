@@ -1,10 +1,10 @@
 use shared::CollectorCommand;
-use std::{sync::mpsc::Sender, time::Instant};
+use std::{sync::mpsc::SyncSender, time::Instant};
 use sysinfo::{CpuExt, SystemExt};
 
 /// Collect data and send it to the server via a TCP stream
 /// ensuring that the data is sent at least every second.
-pub fn collect_data(tx: Sender<CollectorCommand>, collector_id: u128) {
+pub fn collect_data(tx: SyncSender<CollectorCommand>, collector_id: u128) {
     // Initialize the sysinfo system
     let mut sys = sysinfo::System::new_all();
 

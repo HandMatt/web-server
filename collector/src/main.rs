@@ -19,7 +19,7 @@ fn get_uuid() -> u128 {
 
 fn main() {
     let uuid = get_uuid();
-    let (tx, rx) = std::sync::mpsc::channel::<CollectorCommand>();
+    let (tx, rx) = std::sync::mpsc::sync_channel::<CollectorCommand>(1);
 
     // Start the collector thread
     let _collector_thread = std::thread::spawn(move || {
@@ -31,6 +31,10 @@ fn main() {
     while let Ok(command) = rx.recv() {
         let encoded = shared::encode(&command);
         println!("Encoded: {} bytes", encoded.len());
+        if send_queue.len() > 120 {
+            // Drop the first entry
+            send_queue.pop_front();
+        }
         send_queue.push_back(encoded);
         let result = sender::send_queue(&mut send_queue, uuid);
         if result.is_err() {
